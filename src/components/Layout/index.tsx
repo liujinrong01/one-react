@@ -8,7 +8,7 @@ import {
 } from 'antd-mobile-icons'
 import {useNavigate, useLocation} from 'react-router-dom'
 
-import './index.less'
+import styles from './index.module.less'
 interface TabBarProps {
   tabs: { title: string, link: string }[];
 }
@@ -65,19 +65,11 @@ type LayoutProps = {
 
 function Layout({ children, tabs }: LayoutProps) {
   return (
-    /*<div className={styles.app}>
+    <div className={styles.app}>
        <div className={styles.body}>
          <main>{children}</main>
        </div>
       <div className={styles.bottom}>
-        <Bottom />
-      </div>
-    </div>*/
-    <div className={'app'}>
-      <div className={'body'}>
-        <main>{children}</main>
-      </div>
-      <div className={'bottom'}>
         <Bottom />
       </div>
     </div>
