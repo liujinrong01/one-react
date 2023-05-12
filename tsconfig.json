@@ -18,9 +18,36 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "baseUrl": "./src",
+    "paths": {
+      "*": ["*", "src*//*"]
+    },
+    "types": ["node", "react", "react-dom"],
+    "typeRoots": ["node_modules/@types", "./src/types"]
   },
   "include": [
     "src"
   ]
 }
+
+/*{
+  "compilerOptions": {
+    "module": "esnext",
+    "moduleResolution": "node",
+    "target": "es5",
+    "jsx": "react-jsx",
+    "noEmit": true,
+    "isolatedModules": true,
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "allowJs": true,
+    "baseUrl": "./src",
+    "paths": {
+      "*": ["*", "src*//*"]
+    }
+  }
+}*/
