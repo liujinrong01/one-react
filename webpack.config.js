@@ -19,21 +19,39 @@ module.exports = {
                 }
             },
             {
-                test: /\.less$/,
+                test: /\.(less|css)$/,
                 use: [
-                    'style-loader',
+                    require.resolve('style-loader'),
                     {
-                        loader: 'css-loader',
+                        loader: require.resolve('css-loader'),
                         options: {
+                            importLoaders: 2,
                             modules: {
-                                localIdentName: '[name]__[local]___[hash:base64:5]'
+                                auto: true,
+                                localIdentName: '[name]__[local]__[hash:base64:5]',
                             },
-                            importLoaders: 1
-                        }
+                        },
                     },
-                    'less-loader'
-                ]
-            }
+                    {
+                        loader: require.resolve('postcss-loader'),
+                        options: {
+                            postcssOptions: {
+                                ident: 'postcss',
+                                plugins: () => [
+                                    require('postcss-flexbugs-fixes'),
+                                    require('postcss-preset-env')({
+                                        autoprefixer: {
+                                            flexbox: 'no-2009',
+                                        },
+                                        stage: 3,
+                                    }),
+                                ],
+                            },
+                        },
+                    },
+                    require.resolve('less-loader'),
+                ],
+            },
         ]
     },
     resolve: {
