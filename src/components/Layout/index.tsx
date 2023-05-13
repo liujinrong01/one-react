@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React, {ReactNode, useEffect} from 'react';
 import { TabBar } from 'antd-mobile'
 import {
   AppOutline,
@@ -60,10 +60,11 @@ function Bottom() {
 
 type LayoutProps = {
   children: ReactNode;
-  tabs: TabBarProps ['tabs'];
 };
 
-function Layout({ children, tabs }: LayoutProps) {
+function Layout({ children }: LayoutProps) {
+
+
   return (
     <div className={styles.app}>
        <div className={styles.body}>

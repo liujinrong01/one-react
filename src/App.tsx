@@ -1,24 +1,18 @@
-import React from 'react';
 import {BrowserRouter, Routes, Route} from 'react-router-dom'
 import {routes} from './routes'
+
+import './styles/index.less'
 import './App.less';
 import Layout from './components/Layout'
 
 
 
 function App() {
+
+
   return (
     <BrowserRouter>
-      <Layout tabs={[
-        {
-          title: '首页',
-          link: '/'
-        },
-        {
-          title: '发现',
-          link: '/find'
-        }
-      ]}>
+      <Layout>
         <Routes>
           {
             routes.map((route, index) => (
