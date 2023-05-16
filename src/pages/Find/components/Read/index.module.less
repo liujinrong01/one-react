@@ -1,0 +1,59 @@
+
+.top_date {
+    position: sticky;
+    top: 0;
+    z-index: 3;
+    background: rgb(255, 255, 255);
+    text-align: center;
+    font-size: 4vw;
+    color: #333;
+    padding: 3vw 0;
+}
+
+.content_box {
+    padding: 0 4.267vw;
+
+    .date {
+        color: #bcbcbc;
+        font-size: 2vw;
+    }
+}
+.item {
+    display: flex;
+
+    padding: 2.5vw 0;
+    .cover {
+        width: 14.5vw;
+        height: 14.5vw;
+        border-radius: 2vw;
+        overflow: hidden;
+
+        img {
+            //border-radius: 3vw;
+            width: 100%;
+        }
+    }
+
+
+    .right {
+
+        padding-left: 4.509vw;
+        flex: 1;
+
+        .title {
+            font-size: 3.543vw;
+            color: #333;
+            line-height: 2;
+            .text-ellipsis(1);
+            margin-bottom: 2vw;
+        }
+
+        .subtitle {
+            font-size: 2.7vw;
+            color: #bcbcbc;
+        }
+
+
+    }
+
+}

@@ -1,94 +1,121 @@
-import React, {useEffect, useState} from 'react'
-
+import React, {useEffect, useRef, useState} from 'react'
+import dayjs from 'dayjs'
 import styles from './index.module.less'
-
-import HomeApi from '../../api/home'
-import { Swiper } from 'antd-mobile'
-
+import { useSelector, useDispatch } from 'react-redux';
+import {Swiper, SwiperRef} from 'antd-mobile'
 import Nav from './components/Nav'
-import Item from './components/Item'
-import FunctionBar from './components/FunctionBar'
+import DayContainer from './components/DayContainer'
+import {fetchHomeData} from '../../store/home/actions'
+
+
 const Home: React.FC = () => {
 
-  const [data, setData] = useState<any>([])
-  const [first, setFirst] = useState<any>({})
-  const [weather, setWeather] = useState<any>({})
+  const dispatch = useDispatch();
+  const ref = useRef<SwiperRef>(null)
+  const swiperWrap = useRef<HTMLDivElement>(null)
 
+  const [day, setDay] = useState({
+    day: dayjs().format('DD'),
+    month: dayjs().format('MMM'),
+    year: dayjs().format('YYYY'),
+    str: dayjs().format('YYYY-MM-DD')
+  })
+
+  // 日期数组
+  const [dateArray, setDateArray] = useState<string[]>([dayjs().format('YYYY-MM-DD'), dayjs().subtract(1, 'day').format('YYYY-MM-DD')])
+
+  const [swiperStyle, setSwiperStyle] = useState<any>({
+    '--swiper-height': "auto",
+  });
 
   useEffect(() => {
-    async function getData() {
-      const res = await HomeApi.getHomeData({
-        date: '2023-05-13',
-        city: 'shanghai'
-      })
 
-      res.data.content_list.forEach((item: any) => {
-        console.log(item.content_type, item.tag_list)
-        const map = new Map([
-          ['0', ''],
-          ['1', '阅 读'],
-          ['2', ''],
-          ["3", '问 答'],
-          ['4', ''],
-          ['5', ''],
-          ['8', '收音机']
-        ]);
-        item.type_str = item.tag_list.length ? item.tag_list[0]?.title : map.get(item.content_type)
-        console.log('item.tag_list', item.type_str)
-      })
-      setFirst(res.data.content_list[0])
-      setData(res.data.content_list.slice(1))
-      setWeather(res.data.weather)
-    }
-    getData()
   }, [])
 
+  useEffect(() => {
+    dateArray.forEach((item, index) => {
+      // @ts-ignore
+      dispatch(fetchHomeData(item));
+    })
+
+    setTimeout(() => {
+      let swiperSlide: any = swiperWrap.current?.querySelectorAll('.adm-swiper-slide')
+      setSwiperStyle({
+        '--height': swiperSlide[0].getElementsByClassName('adm-swiper-item')[0].offsetHeight + 'px'
+      });
+    }, 100)
+
+  }, [dispatch, dateArray])
+
+
+  function swiperChange(index: number) {
+    setSwiperStyle({
+      '--height': 'auto'
+    });
+    // 获取当前日期
+    let date =  dateArray[index]
+    setDay({
+      day: dayjs(date).format('DD'),
+      month: dayjs(date).format('MMM'),
+      year: dayjs(date).format('YYYY'),
+      str: dayjs(date).format('YYYY-MM-DD')
+    })
+    //获取当前日期的前一天  滑动只需要判断前一天是否存在
+    let preDate = dayjs(date).subtract(1, 'day').format('YYYY-MM-DD')
+    // 添加到日期数组中
+    if(dateArray.indexOf(preDate) === -1) {
+      setDateArray([...dateArray, preDate])
+    }
+
+    // 获取 swiperWrap 下的 adm-swiper-slide
+
+    let swiperSlide: any = swiperWrap.current?.querySelectorAll('.adm-swiper-slide')
+
+    setSwiperStyle({
+      '--height': swiperSlide[index].getElementsByClassName('adm-swiper-item')[0].offsetHeight + 'px'
+    });
+
+
+  }
+
+  function handleToday() {
+    console.log('handleToday')
+    ref.current?.swipeTo(0)
+  }
+
   return (
-    <div className={styles.page_box}>
-      <div className={styles.nav_box}>
-        <Nav weather={weather} />
+
+      <div className={styles.page_box}>
+        <div className={styles.nav_box}>
+          <Nav day={day} handleToday={handleToday}/>
+        </div>
+
+        <div className={styles.container} ref={swiperWrap}>
+
+          <Swiper indicator={() => null} ref={ref} onIndexChange={(index) => swiperChange(index)} style={swiperStyle}>
+            {/*<Swiper.Item>*/}
+            {/*  <DayContainer date={oneDate} />*/}
+            {/*</Swiper.Item>*/}
+            {
+              dateArray.map((item, index) => {
+                return (
+                    <Swiper.Item key={index}>
+                      <DayContainer date={item} />
+                    </Swiper.Item>
+                )
+              })
+            }
+
+            {/*<Swiper.Item>*/}
+            {/*  <DayContainer date={twoDate} />*/}
+            {/*</Swiper.Item>*/}
+          </Swiper>
+        </div>
+
+
+
+
       </div>
-
-      <div className={styles.container}>
-
-        <Swiper indicator={() => null}>
-          <Swiper.Item>
-            <div className={styles.item}>
-              {/*图文*/}
-
-              <div className={styles.first_box}>
-                <div className={styles.img_text_box}>
-                  <img src={first.img_url} alt=""/>
-                  <div className={styles.text_box}>
-                    <p className={`${styles.t1} color-bcbcbc center`}>{first.title} | {first.pic_info}</p>
-                    <p className={`${styles.t2}`}>{first.forward}</p>
-                    <p className={`${styles.t3} color-bcbcbc center`}>{first.words_info}</p>
-                  </div>
-                </div>
-                {/* 功能栏 评论 书签 收藏 转发 */}
-                <div className={styles.function_bar}>
-                  <FunctionBar isFirst={true} likeNum={first.like_count} />
-                </div>
-              </div>
-
-              {/* 列表 */}
-              <div className={styles.list}>
-                {
-                  data.map((item: any) => (
-                    <Item data={item} key={item.id} />
-                  ))
-                }
-              </div>
-
-            </div>
-          </Swiper.Item>
-        </Swiper>
-      </div>
-
-
-
-
-    </div>
   )
 
 }

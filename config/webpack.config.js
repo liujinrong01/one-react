@@ -581,7 +581,22 @@ module.exports = function (webpackEnv) {
                     },
                   },
                 },
-                require.resolve('less-loader'),
+                {
+                    loader: require.resolve('less-loader'),
+                    options: {
+                        lessOptions: {
+                            javascriptEnabled: true,
+                            // globalVars: {
+                            //   '@import "~utils.less";': ''
+                            // }
+                          // 在这里引入你的公共函数文件
+                          modifyVars: {
+                            hack: `true; @import "${path.resolve(__dirname, '/src/styles/common.less')}";`,
+                          },
+                        }
+                    }
+                }
+                // require.resolve('less-loader'),
               ],
             },
             {

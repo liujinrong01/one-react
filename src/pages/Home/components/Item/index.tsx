@@ -3,17 +3,9 @@ import styles from './index.module.less'
 import FunctionBar from '../FunctionBar'
 import {useEffect} from 'react'
 
-import { ItemProps } from '../../home'
 
 // @ts-ignore
 function Item ({data}) {
-
-  useEffect(() => {
-    // console.log('data.content_type', data.content_type)
-    // data.type_str = data.content_type === 1 ? '阅读' : data.content_type === 2 ? '连载' : data.content_type === 3 ? '问答' : '音乐'
-    // console.log('data', data)
-
-  })
 
   return (
     <div>

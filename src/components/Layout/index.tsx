@@ -1,4 +1,4 @@
-import React, {ReactNode, useEffect} from 'react';
+import React, {ReactNode} from 'react';
 import { TabBar } from 'antd-mobile'
 import {
   AppOutline,
@@ -9,9 +9,6 @@ import {
 import {useNavigate, useLocation} from 'react-router-dom'
 
 import styles from './index.module.less'
-interface TabBarProps {
-  tabs: { title: string, link: string }[];
-}
 
 function Bottom() {
 

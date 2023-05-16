@@ -88,6 +88,13 @@ function getClientEnvironment(publicUrl) {
         // Whether or not react-refresh is enabled.
         // It is defined here so it is available in the webpackHotDevClient.
         FAST_REFRESH: process.env.FAST_REFRESH !== 'false',
+        
+        // project config
+        API_platform: 'ios',
+        API_sign: '8ddea06be90a6365d29c0e57f415a571',
+        API_user_id: '',
+        API_uuid: 'A3015BA9-1DBD-4A6D-B675-6830098F48C9',
+        API_version: 'v5.2.7',
       }
     );
   // Stringify all values so we can feed into webpack DefinePlugin
