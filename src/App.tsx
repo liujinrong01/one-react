@@ -16,15 +16,27 @@ function App() {
   return (
     <Provider store={store}>
       <BrowserRouter>
-        <Layout>
+        {/*<Layout>*/}
           <Routes>
+            {/*{*/}
+            {/*  routes.map((route, index) => (*/}
+            {/*    <Route key={index} path={route.path} element={route.element}></Route>*/}
+            {/*  ))*/}
+            {/*}*/}
+            <Route path="/" element={<Layout />}>
+              {
+                routes.map((route: any, index: number) => (
+                  route.hasLayout && <Route key={index} path={route.path} element={route.element}></Route>
+                ))
+              }
+            </Route>
             {
-              routes.map((route, index) => (
-                <Route key={index} path={route.path} element={route.element}></Route>
+              routes.map((route: any, index: number) => (
+                !route.hasLayout && <Route key={index} path={route.path} element={route.element}></Route>
               ))
             }
           </Routes>
-        </Layout>
+        {/*</Layout>*/}
       </BrowserRouter>
     </Provider>
   );

@@ -21,7 +21,8 @@
     "jsx": "react-jsx",
     "baseUrl": "./src",
     "paths": {
-      "*": ["*", "src*//*"]
+      "*": ["*", "src*//*"],
+      "@/*": ["*"]
     },
     "types": ["node", "react", "react-dom", "redux-thunk"],
     "typeRoots": ["node_modules/@types", "./src/types"],

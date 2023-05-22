@@ -6,10 +6,11 @@ import Refresh from '../../components/Refresh'
 import { sleep } from 'antd-mobile/es/utils/sleep'
 
 import Read from './components/Read'
+import DaySign from '@/pages/Find/components/DaySign'
 
 const tabItems = [
   { key: 'fruits', title: '阅读', component: <Read />},
-  { key: 'vegetables', title: '日签' },
+  { key: 'vegetables', title: '日签', component: <DaySign /> },
   { key: 'animals', title: '专题' },
   { key: 'others', title: '问答' },
   { key: 'others1', title: '长篇' },
@@ -23,7 +24,7 @@ const tabItems = [
 
 export default  () => {
   const swiperRef = useRef<SwiperRef>(null)
-  const [activeIndex, setActiveIndex] = useState(0)
+  const [activeIndex, setActiveIndex] = useState(1)
 
   return (
     <>

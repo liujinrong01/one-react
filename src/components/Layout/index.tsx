@@ -6,7 +6,7 @@ import {
   AudioOutline,
   UserOutline,
 } from 'antd-mobile-icons'
-import {useNavigate, useLocation} from 'react-router-dom'
+import {useNavigate, useLocation, Outlet} from 'react-router-dom'
 
 import styles from './index.module.less'
 
@@ -56,7 +56,7 @@ function Bottom() {
 
 
 type LayoutProps = {
-  children: ReactNode;
+  children?: ReactNode;
 };
 
 function Layout({ children }: LayoutProps) {
@@ -65,7 +65,9 @@ function Layout({ children }: LayoutProps) {
   return (
     <div className={styles.app}>
        <div className={styles.body}>
-         <main>{children}</main>
+         <main>
+           <Outlet />
+         </main>
        </div>
       <div className={styles.bottom}>
         <Bottom />

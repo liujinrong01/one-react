@@ -15,6 +15,17 @@ const request = extend({
 // 添加请求拦截器
 request.interceptors.request.use((url, options) => {
     // 这里可以做一些请求前的处理，比如添加 token 等
+    const { API_platform, API_sign, API_user_id, API_uuid, API_version } = process.env;
+    let globalParams = {
+        platform: API_platform,
+        sign: API_sign,
+        user_id: API_user_id,
+        uuid: API_uuid,
+        version: API_version,
+    }
+    options.params = { ...options.params, ...globalParams };
+
+
     return { url, options };
 });
 

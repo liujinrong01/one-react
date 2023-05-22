@@ -8,9 +8,6 @@
 
 import request from '../utils/request';
 
-const { API_platform, API_sign, API_user_id, API_uuid, API_version } = process.env;
-
-
 class FindApi {
 
 
@@ -19,8 +16,15 @@ class FindApi {
    * @param month '2023-05'
    */
   static async getFindRead({ month }: { month: string }) {
-    return request.get(`/api/find/bymonth/1/${month}?platform=${API_platform}&sign=${API_sign}&user_id=&uuid=${API_uuid}&version=${API_version}`)
+    return request.get(`/api/find/bymonth/1/${month}`)
+  }
 
+  /**
+   * 发现-日签
+   */
+
+  static async getFindDay({ month }: { month: string }) {
+    return request.get(`/api/find/bymonth/0/${month}`)
   }
 }
 

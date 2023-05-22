@@ -4,15 +4,6 @@ import { sleep } from "antd-mobile/es/utils/sleep";
 
 const GetPullToRefreshlData = (props: any) => {
   const { itemKey } = props;
-  // const [data, setData] = useState<string[]>([]);
-  // const [hasMore, setHasMore] = useState(true);
-  const loadMore = async () => {
-    // const append = await getNextData();
-    // setData([...data, ...append]);
-    // console.log('loadMore')
-    // setHasMore(false);
-    await props.loadMore()
-  };
 
   useEffect(() => {
     // setData([]);
@@ -20,9 +11,9 @@ const GetPullToRefreshlData = (props: any) => {
   }, [itemKey]);
 
   return (
-    <div style={{height: 'calc(100vh - 50px - 65px)', overflowY: 'scroll'}}>
+    <div ref={props.scrollRef} style={{height: 'calc(100vh - 50px - 65px)', overflowY: 'scroll'}}>
       <PullToRefresh
-        {...props}
+        onRefresh={props.onRefresh}
         key={itemKey}
       >
         {props.children}

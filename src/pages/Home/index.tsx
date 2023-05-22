@@ -40,9 +40,9 @@ const Home: React.FC = () => {
 
     setTimeout(() => {
       let swiperSlide: any = swiperWrap.current?.querySelectorAll('.adm-swiper-slide')
-      setSwiperStyle({
-        '--height': swiperSlide[0].getElementsByClassName('adm-swiper-item')[0].offsetHeight + 'px'
-      });
+      // setSwiperStyle({
+      //   '--height': swiperSlide[0].getElementsByClassName('adm-swiper-item')[0].offsetHeight + 'px'
+      // });
     }, 100)
 
   }, [dispatch, dateArray])
@@ -93,9 +93,6 @@ const Home: React.FC = () => {
         <div className={styles.container} ref={swiperWrap}>
 
           <Swiper indicator={() => null} ref={ref} onIndexChange={(index) => swiperChange(index)} style={swiperStyle}>
-            {/*<Swiper.Item>*/}
-            {/*  <DayContainer date={oneDate} />*/}
-            {/*</Swiper.Item>*/}
             {
               dateArray.map((item, index) => {
                 return (
@@ -105,10 +102,6 @@ const Home: React.FC = () => {
                 )
               })
             }
-
-            {/*<Swiper.Item>*/}
-            {/*  <DayContainer date={twoDate} />*/}
-            {/*</Swiper.Item>*/}
           </Swiper>
         </div>
 
