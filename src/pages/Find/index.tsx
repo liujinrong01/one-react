@@ -1,7 +1,9 @@
-import React, { useRef, useState } from 'react'
+import React, {useEffect, useRef, useState} from 'react'
 import { Tabs, Swiper } from 'antd-mobile'
 import styles from './index.module.less'
 import { SwiperRef } from 'antd-mobile/es/components/swiper'
+
+import { useActivate } from 'react-activation';
 import Refresh from '../../components/Refresh'
 import { sleep } from 'antd-mobile/es/utils/sleep'
 
@@ -26,6 +28,15 @@ export default  () => {
   const swiperRef = useRef<SwiperRef>(null)
   const [activeIndex, setActiveIndex] = useState(1)
 
+  useActivate(() => {
+    // 重新获取数据或初始化状态
+
+    console.log('Find useActivate')
+
+
+
+  });
+
   return (
     <>
       <div style={{ position: "sticky", top: 0, zIndex: 2, background: "#fff" }}>
@@ -48,7 +59,6 @@ export default  () => {
 
         <Swiper
           direction='horizontal'
-          loop
           indicator={() => null}
           ref={swiperRef}
           defaultIndex={activeIndex}
@@ -56,11 +66,11 @@ export default  () => {
             setActiveIndex(index)
           }}
         >
-          {tabItems.map(item => (
-              <Swiper.Item key={item.key}>
-                {item.component || <div>{item.title}</div>}
-              </Swiper.Item>
-            ))}
+          {tabItems.map((item, index) => (
+            <Swiper.Item key={item.key}>
+              {activeIndex === index ? item.component || <div>{item.title}</div> : null}
+            </Swiper.Item>
+          ))}
         </Swiper>
     </>
   )

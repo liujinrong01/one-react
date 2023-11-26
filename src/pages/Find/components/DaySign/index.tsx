@@ -6,8 +6,9 @@ import  {useRef} from 'react'
 import {useDatePagination} from '@/utils/hooks'
 import FindApi from '@/api/find'
 import {useNavigate} from 'react-router-dom'
+import { Image } from 'antd-mobile'
 
-export default () => {
+const DaySign = () => {
   const navigate = useNavigate();
 
   const listRef = useRef<any>(null)
@@ -54,7 +55,8 @@ export default () => {
                     navigate(`/daydetail/${item.id}`)
                   }}>
                     <div className={styles.content_item_img}>
-                      <img src={item.cover} alt=""/>
+                      {/*<img src={item.cover} alt=""/>*/}
+                      <Image src={item.cover}  lazy/>
                     </div>
                     <div className={styles.content_item_date}>{item.maketime.slice(0, 10)}</div>
                   </div>
@@ -66,3 +68,5 @@ export default () => {
     </GetPullToRefreshlData>
   )
 }
+
+export default DaySign

@@ -1,11 +1,19 @@
 
 import styles from './index.module.less'
 import { DownFill } from 'antd-mobile-icons'
-import {useEffect, useMemo, useState} from 'react'
-import {useDispatch, useSelector} from 'react-redux'
+import { useEffect, useMemo, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import dayjs from 'dayjs'
-import {Button} from 'antd-mobile'
-function Nav ({day, handleToday}:any) {
+import { Button } from 'antd-mobile'
+
+
+let currentDate = dayjs(); // 获取当前日期和时间
+if (currentDate.hour() < 6) {
+  currentDate = currentDate.subtract(1, 'day'); // 减去一天
+}
+
+
+function Nav({ day, handleToday }: any) {
   const dispatch = useDispatch();
 
   const [open, setOpen] = useState<boolean>(false)
@@ -14,18 +22,19 @@ function Nav ({day, handleToday}:any) {
     city_name: undefined,
     temperature: undefined
   })
-  const dateData = useSelector((state: any) => state.home.dateData[dayjs().format('YYYY-MM-DD')]);
+  const dateData = useSelector((state: any) => state.home.dateData[currentDate.format('YYYY-MM-DD')]);
 
   // 判断是否今天
   const isToday = useMemo(() => {
-    return dayjs().format('YYYY-MM-DD') === dayjs(day.str).format('YYYY-MM-DD')
+
+    return currentDate.format('YYYY-MM-DD') === dayjs(day.str).format('YYYY-MM-DD')
   }, [day])
 
 
 
 
 
-  function  handleDate () {
+  function handleDate() {
     console.log('handleDate')
     setOpen(!open)
   }
@@ -33,11 +42,11 @@ function Nav ({day, handleToday}:any) {
   useEffect(() => {
     console.log('weather')
 
-    if(dateData) {
+    if (dateData) {
       setWeather(dateData.weather)
     }
 
-  },[dateData, dispatch])
+  }, [dateData, dispatch])
 
 
   return (

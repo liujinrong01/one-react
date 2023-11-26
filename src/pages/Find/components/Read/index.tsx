@@ -2,7 +2,7 @@ import {useEffect, useRef, useState} from 'react'
 
 import styles from './index.module.less'
 import {sleep} from 'antd-mobile/es/utils/sleep'
-import {Divider} from 'antd-mobile'
+import {Divider, Image} from 'antd-mobile'
 import dayjs from 'dayjs'
 
 import FindApi from '@/api/find'
@@ -10,8 +10,12 @@ import GetPullToRefreshlData from '@/components/GetPullToRefreshlData'
 import {formatMonth} from '@/utils/utils'
 import {useDatePagination, useScrollToMonth} from '@/utils/hooks'
 import DateSelect from '@/components/DateSelect'
+import {useNavigate} from "react-router-dom";
 
 export default () => {
+
+  const navigate = useNavigate();
+
 
   const listRef = useRef<any>(null)
   const {loadMore, onRefresh, data: list, hasMore} = useDatePagination(FindApi.getFindRead)
@@ -35,9 +39,11 @@ export default () => {
                 {
                   value.map((item: any, index: number) => {
                     return (
-                      <div className={styles.item} key={index}>
+                      <div className={styles.item} key={index} onClick={() => {
+                        navigate(`/postdetail/${item.id}`)
+                      }}>
                         <div className={styles.cover}>
-                          <img src={item.cover} alt="" />
+                          <Image src={item.cover} lazy alt="" />
                         </div>
                         <div className={styles.right}>
                           <div className={styles.title}>

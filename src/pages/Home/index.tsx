@@ -8,6 +8,12 @@ import DayContainer from './components/DayContainer'
 import {fetchHomeData} from '../../store/home/actions'
 
 
+// 判断当前时间是否在 6 点前,如果6 点前则当天为前一天
+let currentDate = dayjs(); // 获取当前日期和时间
+if (currentDate.hour() < 6) {
+  currentDate = currentDate.subtract(1, 'day'); // 减去一天
+}
+
 const Home: React.FC = () => {
 
   const dispatch = useDispatch();
@@ -15,14 +21,14 @@ const Home: React.FC = () => {
   const swiperWrap = useRef<HTMLDivElement>(null)
 
   const [day, setDay] = useState({
-    day: dayjs().format('DD'),
-    month: dayjs().format('MMM'),
-    year: dayjs().format('YYYY'),
-    str: dayjs().format('YYYY-MM-DD')
+    day: currentDate.format('DD'),
+    month: currentDate.format('MMM'),
+    year: currentDate.format('YYYY'),
+    str: currentDate.format('YYYY-MM-DD')
   })
 
-  // 日期数组
-  const [dateArray, setDateArray] = useState<string[]>([dayjs().format('YYYY-MM-DD'), dayjs().subtract(1, 'day').format('YYYY-MM-DD')])
+  // 日期数组 
+  const [dateArray, setDateArray] = useState<string[]>([currentDate.format('YYYY-MM-DD'), currentDate.subtract(1, 'day').format('YYYY-MM-DD')])
 
   const [swiperStyle, setSwiperStyle] = useState<any>({
     '--swiper-height': "auto",
@@ -104,10 +110,6 @@ const Home: React.FC = () => {
             }
           </Swiper>
         </div>
-
-
-
-
       </div>
   )
 
