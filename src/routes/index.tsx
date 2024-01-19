@@ -31,7 +31,7 @@ export const routes: any = [
     path: ROUTES.FIND,
     element: <Find  /> ,
     hasLayout: true,
-    keepalive: true,
+    // keepalive: true,
   },
   {
     path: ROUTES.RADIO,
@@ -56,6 +56,7 @@ export const routes: any = [
     path: ROUTES.POSTDETAIL,
     element: <PostDetail />,
     hasLayout: false,
+
   }
 ];
 

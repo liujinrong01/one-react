@@ -39,6 +39,7 @@ const Home: React.FC = () => {
   }, [])
 
   useEffect(() => {
+    console.log(dateArray)
     dateArray.forEach((item, index) => {
       // @ts-ignore
       dispatch(fetchHomeData(item));

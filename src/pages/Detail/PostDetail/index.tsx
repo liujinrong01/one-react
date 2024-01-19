@@ -1,14 +1,16 @@
 import styles from './index.module.less'
-import FunctionBar from '@/pages/Home/components/FunctionBar'
 import React, {useEffect, useState} from 'react'
 import DetailApi from '@/api/detail'
 import {useParams} from 'react-router-dom'
-import {HeartOutline} from "antd-mobile-icons";
+import { connect } from 'react-redux';
+import { setTitle } from '@/store/common/actions';
 
-interface Props {
-  detail?: any
+interface DetailPageProps {
+  setTitle: (title: string) => void;
 }
-export default ({detail}: Props) => {
+
+
+const PostDetail: React.FC<DetailPageProps> = ({ setTitle }) => {
   const { id } = useParams();
   const [detailData, setDetailData] = useState<any>({});
 
@@ -16,8 +18,10 @@ export default ({detail}: Props) => {
     console.log('detail is null');
     DetailApi.getArticleDetail(id).then((res: any) => {
       setDetailData(res.data);
+      document.title = res.data.title;
+      setTitle(res.data.title);
     });
-  }, [])
+  }, [id])
 
   return (
     <div className={styles.detail_page}>
@@ -28,3 +32,5 @@ export default ({detail}: Props) => {
     </div>
   )
 }
+
+export default connect(null, {setTitle})(PostDetail)

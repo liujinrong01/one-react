@@ -8,6 +8,7 @@ import {routes} from './routes'
 import './styles/index.less'
 import './App.less';
 import Layout from './components/Layout'
+import NavBar from './components/NavBar'
 import {useEffect} from "react";
 
 function App() {
@@ -22,37 +23,43 @@ function App() {
     <Provider store={store}>
         <BrowserRouter>
           <AliveScope>
-
-          <Routes>
-            <Route path="/" element={<Layout />}>
-              {layoutRoutes.map((route: any) => (
+            <Routes>
+              <Route path="/" element={<Layout />}>
+                {layoutRoutes.map((route: any) => (
+                  <Route
+                    key={route.path}
+                    path={route.path}
+                    element={
+                      route.keepalive ? (
+                        <KeepAlive name={route.path}>{route.element}</KeepAlive>
+                      ) : (
+                        route.element
+                      )
+                    }
+                  />
+                ))}
+              </Route>
+              {noLayoutRoutes.map((route: any) => (
                 <Route
                   key={route.path}
                   path={route.path}
                   element={
-                    route.keepalive ? (
-                      <KeepAlive name={route.path}>{route.element}</KeepAlive>
-                    ) : (
-                      route.element
-                    )
+                    <div>
+                      <NavBar />
+                      <div className={'nav-body'}>
+                        {
+                          route.keepalive ? (
+                            <KeepAlive name={route.path}>{route.element}</KeepAlive>
+                          ) : (
+                              route.element
+                            )
+                        }
+                      </div>
+                    </div>
                   }
                 />
               ))}
-            </Route>
-            {noLayoutRoutes.map((route: any) => (
-              <Route
-                key={route.path}
-                path={route.path}
-                element={
-                  route.keepalive ? (
-                    <KeepAlive name={route.path}>{route.element}</KeepAlive>
-                  ) : (
-                    route.element
-                  )
-                }
-              />
-            ))}
-          </Routes>
+            </Routes>
           </AliveScope>
         </BrowserRouter>
     </Provider>
