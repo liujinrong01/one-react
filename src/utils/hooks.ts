@@ -62,7 +62,7 @@ export const useScrollToMonth = (listData: any, ref: any) => {
 
 
 /**
- * 分页 hooks
+ * 日期 分页 hooks
  * @param api
  // * @param hasMore
  // * @param loadMore
@@ -132,4 +132,62 @@ export const useDatePagination = (api: any) => {
     onRefresh,
   }
 
+}
+
+
+/**
+ * 专题 分页 hooks
+ * @param api
+ * @param hasMore
+ * @param loadMore
+ * @param onRefresh
+ * @return {data, hasMore, loadMore, onRefresh}
+ *
+ */
+
+export const useTopicPagination = (api: any) => {
+
+  // data: Map {key: month, value: [array object]}
+  const [data, setData] = useState<any>([]);
+  const [hasMore, setHasMore] = useState(true);
+
+  useEffect(() => {
+
+    return () => {
+      setData([])
+      setHasMore(true)
+    }
+  }, [])
+
+  const loadMore = async () => {
+    await sleep(1000)
+    let lastId = 0
+    if (data.length > 0) {
+      lastId = data[data.length - 1].id || 0
+    }
+    console.log('lastId', lastId)
+    try {
+      const { data: newData } = await api({lastId})
+
+      console.log('newData', newData)
+      setData([...data, ...newData])
+      setHasMore(newData.length > 0)
+    } catch (error) {
+      console.log(error)
+      setHasMore(true)
+    }
+  }
+
+  const onRefresh = async () => {
+    console.log('topic: onRefresh')
+    setData([])
+    setHasMore(true)
+  }
+
+  return {
+    data,
+    hasMore,
+    loadMore,
+    onRefresh,
+  }
 }

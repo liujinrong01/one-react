@@ -7,7 +7,8 @@ import Radio from '../pages/Radio'
 import Mine from '../pages/Mine'
 import DayDetail from '@/pages/Detail/DayDetail'
 import PostDetail from '@/pages/Detail/PostDetail'
-
+import TopicDetail from "@/pages/Detail/TopicDetail";
+import QuestionDetail from "@/pages/Detail/QuestionDetail";
 export enum ROUTES {
   HOME = "/",
   FIND = "/find",
@@ -15,6 +16,8 @@ export enum ROUTES {
   MINE = "/mine",
   DAYDETAIL = "/daydetail/:id",
   POSTDETAIL = "/postdetail/:id",
+  TOPICDETAIL = "/topicdetail/:id",
+  QUESTIONDETAIL = "/questiondetail/:id"
 
 }
 
@@ -56,7 +59,16 @@ export const routes: any = [
     path: ROUTES.POSTDETAIL,
     element: <PostDetail />,
     hasLayout: false,
-
+  },
+  {
+    path: ROUTES.TOPICDETAIL,
+    element: <TopicDetail />,
+    hasLayout: false,
+  },
+  {
+    path: ROUTES.QUESTIONDETAIL,
+    element: <QuestionDetail />,
+    hasLayout: false,
   }
 ];
 

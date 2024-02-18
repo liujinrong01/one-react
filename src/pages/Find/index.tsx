@@ -10,13 +10,15 @@ import { sleep } from 'antd-mobile/es/utils/sleep'
 import Read from './components/Read'
 import DaySign from '@/pages/Find/components/DaySign'
 import Topic from './components/Topic';
+import Question from "@/pages/Find/components/Question";
+import Serial from "@/pages/Find/components/Serial";
 
 const tabItems = [
   { key: 'fruits', title: '阅读', component: <Read />},
   { key: 'vegetables', title: '日签', component: <DaySign /> },
   { key: 'animals', title: '专题', component: <Topic></Topic> },
-  { key: 'others', title: '问答' },
-  { key: 'others1', title: '长篇' },
+  { key: 'question', title: '问答', component: <Question></Question> },
+  { key: 'Serial', title: '长篇', component: <Serial></Serial> },
   { key: 'others2', title: '小记' },
   { key: 'others3', title: '热榜' },
   { key: 'others4', title: '书影' },
@@ -27,7 +29,7 @@ const tabItems = [
 
 export default  () => {
   const swiperRef = useRef<SwiperRef>(null)
-  const [activeIndex, setActiveIndex] = useState(1)
+  const [activeIndex, setActiveIndex] = useState(4)
 
   useActivate(() => {
     // 重新获取数据或初始化状态
